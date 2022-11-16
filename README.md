@@ -1,5 +1,5 @@
 # FinalProjectRakamin
-Will be updated sequentially, according to My learning progress on Rakamin Academy
+Will be updated sequentially, according Final Project progress on Rakamin Academy
 
 Stage 0
 1. Problem Statement
