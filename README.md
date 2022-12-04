@@ -40,29 +40,29 @@ Semua kolom memiliki nilai outliers. Namun ada beberapa fitur yang tidak terdist
 
 ## 📂 Stage 2 : Data Preprocessing
 ### 📌 Data Cleansing
-### 1. Handle Missing Value
+#### 1. Handle Missing Value
 Tidak ada nilai yang kosong pada kolom, sehingga tidak dilakukan handling missing value.
 
-### 2. Handle Duplicated Value
+#### 2. Handle Duplicated Value
 Terdapat 125 data yang duplikat. Hanya diambil satu data untuk masing-masing duplikat.
 
-### 3. Handle Outlier
+#### 3. Handle Outlier
 Presentase outlier menggunakan analisis Z-Score dalam data adalah 17.90%, nilai tersebut cukup besar, maka outlier tidak dihilangkan. Tidak dilakukan handle outlier ini juga kerana diasumsikan bukan dari kesalahan dalam pengambilan data.
 
-### 4. Feature Transformation
+#### 4. Feature Transformation
 Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. PowerTransformer Yeo-Johnson dipilih untuk membuat distribusi lebih mendekati normal (Guassian) dan mendukung value data memiliki nilai positif atau negatif.
 
-### 5. Feature Extraction
+#### 5. Feature Extraction
 Mengubah data kategorikal kedalam numerikal. 
 - OperatingSystems, Browser, Region, TrafficType sudah memiliki feature numerik
 - Month akan dilakukan label encoding, pada bulan dibuat label peringkat berdasarkan jumlah peringkat user dari yang terbesar.
 - VisitorType, Weekend, dan Revenue akan dilakukan One Hot Encoding
 
-### 6. Handle Class Imbalance
+#### 6. Handle Class Imbalance
 Handle imbalance menggunakan SMOTE dengan hasil False 10297 dan True 5148.
 
-## 📌 Feature Enginering
-### 1. Feature Selection
+### 📌 Feature Enginering
+#### 1. Feature Selection
 Pada tahap feature selection ini fitur yang redundant adalah :
 - Administrative - Administrative_Duration
 - Informational - Informational_Duration
@@ -74,7 +74,7 @@ Pada tahap feature selection ini fitur yang redundant adalah :
 
 Ketiga terakhir akan dibuat feature extraction untuk mendapatkan durasi tiap page nya, sedangkan BounceRates - ExitRates, akan dipilih salah satu, yaitu ExitRates
 
-### 2. Feature Extraction
+#### 2. Feature Extraction
 Pembuatan feature :
 - Duration per Page Administrative
 - Duration per Page Informational
