@@ -6,6 +6,12 @@
 - Pada satu tahun terakhir, perusahaan hanya menghasilkan conversion rate (revenue true) sebesar 15% dari pelanggan yang mengunjungi website.
 - Pada masa pandemi (2020-2021) menurut data Digital Experience Benchmark Report, conversion rate diberbagai industri e-commerce mengalami peningkatan rata-rata sebesar 28% dikarenakan secara signifikan kebiasaan customers untuk berbelanja beralih ke sistem online. Hal ini akan merupakan suatu kesempatan yang besar bagi perusahaan untuk meningkatkan revenue.
 
+<br>
+<p align="center">
+  <kbd><img src="pictures/ecommerce_data.png" width=600px> </kbd> <br>
+  Gambar 1 - Rata-rata Conversion Rate untuk Industri E-commerce
+</p>
+
 ### **Objectives**
 - Mendapatkan insight dari pola customer.
 - Memprediksi pengunjung yang memiliki kecenderungan membeli atau tidak.
