@@ -1,29 +1,38 @@
 # 🛒 Online Shoppers Purchasing Intention 🛒
 
-## 📂 Stage 0 : Overview
-### 📌 Problem Statement
-Sebuah platform online shop pada rentang waktu tertentu memiliki 12.330 visitor. Namun visitor yang menghasilkan revenue hanya sebesar 15%. Dangan kata lain sebagian besar 85% visitor tidak melakukan pembelian. Menganalisa pola mengapa visitor yang membeli lebih kecil daripada yang tidak, perlu dilakukan untuk pembuatan model prediksi yang dapat meningkatkan revenue conversion rate.
+## 📂 **Stage 0 : Problem Statement**
+### **Problem Statement**
+- Majestic merupakan suatu perusahaan E-commerce (marketplace) yang menyediakan berbagai macam kebutuhan untuk pelanggan. 
+- Pada satu tahun terakhir, perusahaan hanya menghasilkan conversion rate (revenue true) sebesar 15% dari pelanggan yang mengunjungi website.
+- Pada masa pandemi (2020-2021) menurut data Digital Experience Benchmark Report, conversion rate diberbagai industri e-commerce mengalami peningkatan rata-rata sebesar 28% dikarenakan secara signifikan kebiasaan customers untuk berbelanja beralih ke sistem online. Hal ini akan merupakan suatu kesempatan yang besar bagi perusahaan untuk meningkatkan revenue.
 
-### 📌 Objective
-- Mendapatkan insight dari pola user yang menghasilkan revenue
-- Memprediksi pengunjung yang memiliki kecenderungan membeli atau tidak guna meningkatkan revenue convesion rate
-- Memberikan bisnis rekomendasi yang tepat
+### **Objectives**
+- Mendapatkan insight dari pola customer.
+- Memprediksi pengunjung yang memiliki kecenderungan membeli atau tidak.
+- Memberikan bisnis rekomendasi yang tepat.
 
-### 📌 Business Metrics
+### **Goals**
+- Membuat model machine learning yang dapat memprediksi customer yang berpeluang menghasilkan revenue.
+- Diharapkan revenue conversion rate dapat meningkat mencapai 28%.
+
+### **Business Metrics**
 -  Revenue Conversion Rate
 
 ## 📂 Stage 1 : Exploratory Data Analysis
-### 📌 Descriptive Statistics
+### Dataset
+Dataset memiliki fitur-fitur yang menunjukkan aktivitas website dan aktivitas pembelian.
+
+### Descriptive Statistics
 Insight yang di dapat dari analisis statistik berupa:
 - Dataset Berisi 12330 baris dan 18 kolom
 - Dataset meiliki kolom bertipe bool(2), float64(7), int64(7), objek(2)
 - Variabel Target Revenue mempunhyai nilai bool, jadi ini klasifikasi biner True/False.
 - Tidak ada null value
 
-### 📌 Univariate Analysis
+### Univariate Analysis
 Semua kolom memiliki nilai outliers. Namun ada beberapa fitur yang tidak terdistribusi dengan baik yaitu fitur informational, informational_duration, pave_values, special_days, dan browser.
 
-### 📌 Multivariate Analysis
+### Multivariate Analysis
 **Hubungan Antar Kolom Numerikal :**
 - Beberapa feature yang kemungkinan redundan karena memiliki korelasi yang cukup tinggi (>0.7) diantaranya ProductRelated dengan ProductRelated_Duration, Adminisitrative dengan Adminisitrative_Duration, Informational dengan Informational_Duration, dan begitu pula BounceRates dengan ExitRates. Dalam tahap data prepocessing feature-feature tersebut dapat di drop ataupun dipilih salah satu.
 - Kolom PageValues ternyata memiliki korelasi yang cukup dengan Revenue_numbers (0.49) sehingga perlu dipertahankan.
@@ -39,7 +48,7 @@ Semua kolom memiliki nilai outliers. Namun ada beberapa fitur yang tidak terdist
 - Tidak banyak insight yang bisa didapatkan. Contohnya pada kolom revenue terhadap kolom numerikal lain (di samping). Persebaran kolom merata baik customer yang memberikan revenue dan yang tidak. Begitu pula dengan grafik kolom Month dengan kolom numerikal lain (bawah).
 
 ## 📂 Stage 2 : Data Preprocessing
-### 📌 Data Cleansing
+### Data Cleansing
 #### 1. Handle Missing Value
 Tidak ada nilai yang kosong pada kolom, sehingga tidak dilakukan handling missing value.
 
@@ -61,7 +70,7 @@ Mengubah data kategorikal kedalam numerikal.
 #### 6. Handle Class Imbalance
 Handle imbalance menggunakan SMOTE dengan hasil False 10297 dan True 5148.
 
-### 📌 Feature Enginering
+### Feature Enginering
 #### 1. Feature Selection
 Pada tahap feature selection ini fitur yang redundant adalah :
 - Administrative - Administrative_Duration
