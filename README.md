@@ -1,4 +1,4 @@
-# 🛒 **ONLINE SHOPPERS PURCHASING INTENTION** 🛒
+# 🛒 **Online Shoppers Purchasing Intention** 🛒
 ---
 ## 📂 **Stage 0 : Problem Statement**
 ### Problem Statement
@@ -35,11 +35,11 @@
 ### Descriptive Statistics
 
 <p align="center">
-  <kbd><img src="pictures/distribusi.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/distribution.png" width=600px> </kbd> <br>
   Gambar 2 – Distribusi Dataset
 </p>
 
-Hasil analisi statistik deskriptif untuk fitur-fitur numerik adalah sebagai berikut :
+Hasil analisis statistik deskriptif untuk fitur-fitur numerik adalah sebagai berikut :
 1. Distribusi data secara keseluruhan cenderung **positively-skewed** (Mean > Median).
 2. Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRate, PageValues memiliki ekor distribusi yang pang panjang dengan nilai yang **menumpuk disekitar angka 0**.
 3. Dari kedua kondisi diatas dan dari analisa menggunakan boxplot mayoritas fitur memiliki outlier. <br>
@@ -81,7 +81,7 @@ tulis
 ### Workflow Data Pre-processing
 <br>
 <p align="center">
-  <kbd><img src="pictures/workflow preprocessing.png" width=300px> </kbd> <br>
+  <kbd><img src="pictures/workflow preprocessing.png"> </kbd> <br>
   Gambar 5 – Workflow Data Pre-Processing
 </p>
 
