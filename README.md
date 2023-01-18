@@ -35,14 +35,9 @@
 ### Descriptive Statistics
 
 <p align="center">
-  <kbd><img src="pictures/distribution.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/distribusi.png" width=600px> </kbd> <br>
   Gambar 2 – Distribusi Dataset
 </p>
-
-Hasil analisis statistik deskriptif untuk fitur-fitur numerik adalah sebagai berikut :
-1. Distribusi data secara keseluruhan cenderung **positively-skewed** (Mean > Median).
-2. Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRate, PageValues memiliki ekor distribusi yang pang panjang dengan nilai yang **menumpuk disekitar angka 0**.
-3. Dari kedua kondisi diatas dan dari analisa menggunakan boxplot mayoritas fitur memiliki outlier. <br>
 <br>
 <p align="center">
   <kbd><img src="pictures/outlier.png" width=600px> </kbd> <br>
@@ -50,9 +45,15 @@ Hasil analisis statistik deskriptif untuk fitur-fitur numerik adalah sebagai ber
 </p> 
 <br>
 
+Hasil analisi statistik deskriptif untuk fitur-fitur numerik adalah sebagai berikut :
+1. Distribusi data secara keseluruhan cenderung **positively-skewed** (Mean > Median).
+2. Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRate, PageValues memiliki ekor distribusi yang pang panjang dengan nilai yang **menumpuk disekitar angka 0**.
+3. Dari kedua kondisi diatas dan dari analisa menggunakan boxplot mayoritas fitur memiliki outlier. <br>
+
+
 Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur kategorik adalah sebagai berikut.
 1. Beberapa fitur memiliki nilai yang **telah di encoding** seperti OperatingSystems, Browser, Region, dan TrafficType, sehingga apabila diperlukan interpretasi nilai maka diperlukan data tambahan.
-2. Mayoritas pengunjung  berasal dari **region wilayah 2** dan ketika berselancar di website menggunakan **OperatingSystem jenis 2* dengan **Browser jenis 1**.
+2. Mayoritas pengunjung  berasal dari **region wilayah 2** dan ketika berselancar di website menggunakan **OperatingSystem jenis 2** dengan **Browser jenis 1**.
 3. **Returning Visitor** merupakan pengunjung yang paling dominan. Pada fitur VisitorType ini perlu dilakukan penanganan terhadap nilai Other.
 4. Terdapat dua bulan yang hilang pada fitur Month yaitu January dan April. Bulan **Mei** memiliki jumlah pengunjung terbanyak, lalu diikuti dengan bulan November.
 
@@ -73,7 +74,28 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
     - BounceRates dengan ExitRates
 
 ### Insight
-tulis
+#### Revenue Conversion Rate Berdasarkan Visitor Type
+<br>
+<p align="center">
+  <kbd><img src="pictures/visitor x revenue.png" width=600px> </kbd> <br>
+  Gambar 5 – Revenue Conversion Rate Berdasarkan Visitor Type
+</p>
+<br>
+
+- Hampir sebanyak **80%** pengunggung website didominasi oleh **Returning Visitor**. Hal ini dapat menunjukkan bahwa perusahaan E-commerce telah berhasil untuk mempertahankan pelanggan untuk selalu mengunjugi website. Namun **Revenue Conversion Rate lebih besar** terjadi pada **New Visitor**, yaitu **25% New Visitor melakukan pembelian**. Berbeda dengan Returning Visitor.
+- Dibutuhkan data tambahan berupa angka revenue atau profit apabila ingin dilakukan analisa lebih jauh untuk mengetahui pelanggan tipe pengunjung mana yang menghasilkan keuntungan lebih besar bagi perusahaan.
+- Dari insight yang ditemukan dibutuhkan rekomendasi bisnis yang tepat untuk **meningkatkan Revenue Conversion Rate bagi Returning Visitor** dan juga untuk **meningkatkan jumlah New Visitor**.
+
+#### Total Pengunjung per Bulan berdasarkan Revenue
+<br>
+<p align="center">
+  <kbd><img src="pictures/monthly visitor x revenue.png" width=600px> </kbd> <br>
+  Gambar 6 – Total Pengunjung per Bulan berdasarkan Revenue
+</p>
+<br>
+
+- Berdasarkan grafik analisis diatas dapat dilihat bahwa trafik kunjungan pelanggan, memiliki jumlah **pengunjung yang paling tinggi** pada bulan **Mei** dan selanjutnya disusul dengan bulan **November**. 
+- Namun pada bulan Mei tingginya trafik **tidak diikuti dengan tingginya angka Revenue Conversion Rate** yang hanya menghasilkan **11%**, angka ini masih cukup rendah dibandingkan dengan bulan-bulan lainnya. Sedangkan **November** merupakan bulan yang memiliki cukup **banyak pengunjung** dengan nilai **Revenue Conversion Rate** bulanan yang **paling tinggi**, yaitu mencapai **25%**.
 
 ---
 
@@ -81,34 +103,27 @@ tulis
 ### Workflow Data Pre-processing
 <br>
 <p align="center">
-  <kbd><img src="pictures/workflow preprocessing.png"> </kbd> <br>
-  Gambar 5 – Workflow Data Pre-Processing
+  <kbd><img src="pictures/workflow preprocessing.png" width=300px> </kbd> <br>
+  Gambar 7 – Workflow Data Pre-Processing
 </p>
 
-### Data Cleaning
-#### 1. Handle Missing Value
-Tidak ada nilai yang kosong pada kolom, sehingga tidak dilakukan handling missing value.
+#### 1. Handling Tipe Data, Nilai, dan Duplikat
+- tipe data
+- nilai
+- Terdapat 125 data yang duplikat. Hanya diambil satu data untuk masing-masing duplikat.
 
-#### 2. Handle Duplicated Value
-Terdapat 125 data yang duplikat. Hanya diambil satu data untuk masing-masing duplikat.
-
-#### 3. Handle Outlier
+#### 2. Handling Outlier
 Presentase outlier menggunakan analisis Z-Score dalam data adalah 17.90%, nilai tersebut cukup besar, maka outlier tidak dihilangkan. Tidak dilakukan handle outlier ini juga kerana diasumsikan bukan dari kesalahan dalam pengambilan data.
 
-#### 4. Feature Transformation
-Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. PowerTransformer Yeo-Johnson dipilih untuk membuat distribusi lebih mendekati normal (Guassian) dan mendukung value data memiliki nilai positif atau negatif.
+#### 3. Feature Transformation
+Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. PowerTransformer Yeo-Johnson dipilih karena dapat digunakan pada data yang distribusi awalnya positively/negatively-skewed, untuk membuat distribusinya menjadi lebih mendekati normal (Guassian), dan mendukung value data memiliki nilai positif atau negatif.
+
+#### 4. Feature Encoding
 
 #### 5. Feature Extraction
-Mengubah data kategorikal kedalam numerikal. 
-- OperatingSystems, Browser, Region, TrafficType sudah memiliki feature numerik
-- Month akan dilakukan label encoding, pada bulan dibuat label peringkat berdasarkan jumlah peringkat user dari yang terbesar.
-- VisitorType, Weekend, dan Revenue akan dilakukan One Hot Encoding
-
-#### 6. Handle Class Imbalance
 Handle imbalance menggunakan SMOTE dengan hasil False 10297 dan True 5148.
 
-### Feature Enginering
-#### 1. Feature Selection
+#### 6. Feature Selection
 Pada tahap feature selection ini fitur yang redundant adalah :
 - Administrative - Administrative_Duration
 - Informational - Informational_Duration
@@ -120,7 +135,7 @@ Pada tahap feature selection ini fitur yang redundant adalah :
 
 Ketiga terakhir akan dibuat feature extraction untuk mendapatkan durasi tiap page nya, sedangkan BounceRates - ExitRates, akan dipilih salah satu, yaitu ExitRates
 
-#### 2. Feature Extraction
+#### 7. Split Data Train dan Test
 Pembuatan feature :
 - Duration per Page Administrative
 - Duration per Page Informational
@@ -136,7 +151,12 @@ Pembuatan feature :
 - Month
 - VisitorType_Returning_Visito
 - Revenue_True
+
+#### 8. Handling Class Imbalance
+
+
+
 ---
-## 📂 **Stage 4 : Modeling and Ealuation**
+## 📂 **Stage 4 : Modeling and Evaluation**
 ---
 ## 📂 **Stage 5 : Business Insight and Recomendation**
