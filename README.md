@@ -8,7 +8,7 @@
 
 <br>
 <p align="center">
-  <kbd><img src="pictures/ecommerce_data.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/ecommerce_data.png" width=650px> </kbd> <br>
   Gambar 1 – Rata-rata Conversion Rate untuk Industri E-commerce
 </p>
 
@@ -29,29 +29,29 @@
 ### Dataset
 <p align="center">
   Tabel 1 – Ringkasan Dataset<br>
-  <kbd><img src="pictures/dataset.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/dataset.png" width=650px> </kbd> <br>
 </p>
 
 ### Descriptive Statistics
 
 <p align="center">
-  <kbd><img src="pictures/distribusi.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/distribution.png" width=650px> </kbd> <br>
   Gambar 2 – Distribusi Dataset
 </p>
 <br>
 <p align="center">
-  <kbd><img src="pictures/outlier.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/outlier.png" width=650px> </kbd> <br>
   Gambar 3 – Distribusi Dataset dengan Boxplot
 </p> 
 <br>
 
-Hasil analisi statistik deskriptif untuk fitur-fitur numerik adalah sebagai berikut :
-1. Distribusi data secara keseluruhan cenderung **positively-skewed** (Mean > Median).
+Hasil analisi statistik deskriptif untuk **fitur-fitur numerikal** adalah sebagai berikut :
+1. Distribusi data secara keseluruhan cenderung **positively-skewed** (**Mean > Median**).
 2. Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRate, PageValues memiliki ekor distribusi yang pang panjang dengan nilai yang **menumpuk disekitar angka 0**.
 3. Dari kedua kondisi diatas dan dari analisa menggunakan boxplot mayoritas fitur memiliki outlier. <br>
+<br>
 
-
-Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur kategorik adalah sebagai berikut.
+Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur **kategorikal** adalah sebagai berikut.
 1. Beberapa fitur memiliki nilai yang **telah di encoding** seperti OperatingSystems, Browser, Region, dan TrafficType, sehingga apabila diperlukan interpretasi nilai maka diperlukan data tambahan.
 2. Mayoritas pengunjung  berasal dari **region wilayah 2** dan ketika berselancar di website menggunakan **OperatingSystem jenis 2** dengan **Browser jenis 1**.
 3. **Returning Visitor** merupakan pengunjung yang paling dominan. Pada fitur VisitorType ini perlu dilakukan penanganan terhadap nilai Other.
@@ -59,7 +59,7 @@ Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur kategorik adalah
 
 ### Analysis
 <p align="center">
-  <kbd><img src="pictures/corre.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/corre.png" width=650px> </kbd> <br>
   Gambar 4 – Heatmap Analisis Multivariat
 </p>
 <br>
@@ -77,7 +77,7 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
 #### Revenue Conversion Rate Berdasarkan Visitor Type
 <br>
 <p align="center">
-  <kbd><img src="pictures/visitor x revenue.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/vistor x revenue.png"> </kbd> <br>
   Gambar 5 – Revenue Conversion Rate Berdasarkan Visitor Type
 </p>
 <br>
@@ -89,7 +89,7 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
 #### Total Pengunjung per Bulan berdasarkan Revenue
 <br>
 <p align="center">
-  <kbd><img src="pictures/monthly visitor x revenue.png" width=600px> </kbd> <br>
+  <kbd><img src="pictures/monthly visitor x revenue.png"> </kbd> <br>
   Gambar 6 – Total Pengunjung per Bulan berdasarkan Revenue
 </p>
 <br>
@@ -103,58 +103,46 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
 ### Workflow Data Pre-processing
 <br>
 <p align="center">
-  <kbd><img src="pictures/workflow preprocessing.png" width=300px> </kbd> <br>
+  <kbd><img src="pictures/workflow preprocessing.png"> </kbd> <br>
   Gambar 7 – Workflow Data Pre-Processing
 </p>
+<br>
 
-#### 1. Handling Tipe Data, Nilai, dan Duplikat
-- tipe data
-- nilai
-- Terdapat 125 data yang duplikat. Hanya diambil satu data untuk masing-masing duplikat.
+#### 1. Handling Nilai dan Duplikat
+- Nilai **'Other'** pada fitur **VisitorType** diubah kedalam nilai dengan frekuensi terbanyak yaitu menjadi **'Returning Visitor'**.
+- Terdapat 125 data yang duplikat. Hanya **diambil satu data** untuk masing-masing duplikat.
 
 #### 2. Handling Outlier
-Presentase outlier menggunakan analisis Z-Score dalam data adalah 17.90%, nilai tersebut cukup besar, maka outlier tidak dihilangkan. Tidak dilakukan handle outlier ini juga kerana diasumsikan bukan dari kesalahan dalam pengambilan data.
+Presentase outlier menggunakan analisis Z-Score dalam data adalah **17.90%**, nilai tersebut cukup besar, maka **outlier tidak dihilangkan**. Tidak dilakukan handle outlier ini juga kerana diasumsikan **bukan dari kesalahan dalam pengambilan data**.
 
 #### 3. Feature Transformation
-Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. PowerTransformer Yeo-Johnson dipilih karena dapat digunakan pada data yang distribusi awalnya positively/negatively-skewed, untuk membuat distribusinya menjadi lebih mendekati normal (Guassian), dan mendukung value data memiliki nilai positif atau negatif.
+Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. **PowerTransformer Yeo-Johnson** dipilih karena dapat digunakan pada data yang distribusi awalnya positively/negatively-skewed, untuk membuat distribusinya menjadi lebih mendekati normal (Guassian), dan mendukung value data memiliki nilai positif atau negatif.
 
 #### 4. Feature Encoding
+Fitur VisitorType dan Revenue dilakukan **One Hot Encoding**.
 
 #### 5. Feature Extraction
-Handle imbalance menggunakan SMOTE dengan hasil False 10297 dan True 5148.
+Membuat fitur baru dari fitur yang sudah ada, diantaranya adalah:
+- Duration Page Per Administrative
+- Duration Page Per Informational
+- Duration Page Per Product Related
 
 #### 6. Feature Selection
-Pada tahap feature selection ini fitur yang redundant adalah :
-- Administrative - Administrative_Duration
-- Informational - Informational_Duration
-- ProductRelated - ProductRelated_Duration
-- BounceRates - ExitRates
-- Administrative - Administrative_Duration
-- Informational - Informational_Duration
-- ProductRelated - ProductRelated_Duration
-
-Ketiga terakhir akan dibuat feature extraction untuk mendapatkan durasi tiap page nya, sedangkan BounceRates - ExitRates, akan dipilih salah satu, yaitu ExitRates
-
-#### 7. Split Data Train dan Test
-Pembuatan feature :
+Pada tahap ini dilakukan seleksi fitur yang memiliki **korelasi terhadap revenue**, menghilangkan fitur yang redundan dan kurang relavan terhadap performa model. Fitur-fitur yang dipilih antara lain adalah :
 - Duration per Page Administrative
 - Duration per Page Informational
-- Duration per Page ProductRelated
-
-**Data yang dipilih :**
-- Duration per Page Administrative
-- Duration per Page Informational
-- Duration per Page ProductRelated
+- ProductRelated
 - ExitRates
 - PageValues
 - SpecialDay
-- Month
 - VisitorType_Returning_Visito
 - Revenue_True
 
+#### 7. Splitting Data Train dan Test
+Splitting dataset train dan test dilakukan dengan proporsi **70 : 30**.
+
 #### 8. Handling Class Imbalance
-
-
+Dikarenakan jumlah kelas antar fitur target cukup besar maka Handling Class Imbalance dilakukan pada data train dengan menggunakan metode **SMOTE**.
 
 ---
 ## 📂 **Stage 4 : Modeling and Evaluation**
