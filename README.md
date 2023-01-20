@@ -1,107 +1,210 @@
-# 🛒 Online Shoppers Purchasing Intention 🛒
-
+# 🛒 **Online Shoppers Purchasing Intention** 🛒
+---
 ## 📂 **Stage 0 : Problem Statement**
-### **Problem Statement**
+### Problem Statement
 - Majestic merupakan suatu perusahaan E-commerce (marketplace) yang menyediakan berbagai macam kebutuhan untuk pelanggan. 
-- Pada satu tahun terakhir, perusahaan hanya menghasilkan conversion rate (revenue true) sebesar 15% dari pelanggan yang mengunjungi website.
-- Pada masa pandemi (2020-2021) menurut data Digital Experience Benchmark Report, conversion rate diberbagai industri e-commerce mengalami peningkatan rata-rata sebesar 28% dikarenakan secara signifikan kebiasaan customers untuk berbelanja beralih ke sistem online. Hal ini akan merupakan suatu kesempatan yang besar bagi perusahaan untuk meningkatkan revenue.
+- Pada satu tahun terakhir, perusahaan hanya menghasilkan **Conversion Rate** sebesar **15%** dari pelanggan yang mengunjungi website.
+- Pada masa pandemi (2020-2021) menurut data [**Digital Experience Benchmark Report**](https://contentsquare.com/blog/ecommerce-conversion-rate/), Conversion Rate diberbagai industri E-commerce mengalami **peningkatan** rata-rata sebesar **28%** dikarenakan secara signifikan kebiasaan pelanggan untuk berbelanja beralih ke sistem online. Hal ini akan menjadi suatu kesempatan besar bagi perusahaan untuk meningkatkan revenue.
 
 <br>
 <p align="center">
-  <kbd><img src="pictures/ecommerce_data.png" width=600px> </kbd> <br>
-  Gambar 1 - Rata-rata Conversion Rate untuk Industri E-commerce
+  <kbd><img src="pictures/ecommerce_data.png" width=650px> </kbd> <br>
+  Gambar 1 – Rata-rata Conversion Rate untuk Industri E-commerce
 </p>
 
-### **Objectives**
-- Mendapatkan insight dari pola customer.
-- Memprediksi pengunjung yang memiliki kecenderungan membeli atau tidak.
-- Memberikan bisnis rekomendasi yang tepat.
+### Objectives
+- Mendapatkan **insight** mengenai pola kebiasaan pelanggan dalam berselancar di website.
+- **Memprediksi** pengunjung yang memiliki kecenderungan membeli atau tidak.
+- Memberikan **bisnis rekomendasi** yang tepat guna meningkatkan kecenderungan pelanggan untuk membeli.
 
-### **Goals**
+### Goals
 - Membuat model machine learning yang dapat memprediksi customer yang berpeluang menghasilkan revenue.
-- Diharapkan revenue conversion rate dapat meningkat mencapai 28%.
+- Diharapkan model dapat menigkatkan Revenue Conversion Rate sebesar 28%.
 
-### **Business Metrics**
+### Business Matrics
 -  Revenue Conversion Rate
+<br>
 
-## 📂 Stage 1 : Exploratory Data Analysis
+---
+
+## 📂 **Stage 1 : Exploratory Data Analysis**
 ### Dataset
-Dataset memiliki fitur-fitur yang menunjukkan aktivitas website dan aktivitas pembelian.
+<p align="center">
+  Tabel 1 – Ringkasan Dataset<br>
+  <kbd><img src="pictures/dataset.png" width=650px> </kbd> <br>
+</p>
 
 ### Descriptive Statistics
-Insight yang di dapat dari analisis statistik berupa:
-- Dataset Berisi 12330 baris dan 18 kolom
-- Dataset meiliki kolom bertipe bool(2), float64(7), int64(7), objek(2)
-- Variabel Target Revenue mempunhyai nilai bool, jadi ini klasifikasi biner True/False.
-- Tidak ada null value
 
-### Univariate Analysis
-Semua kolom memiliki nilai outliers. Namun ada beberapa fitur yang tidak terdistribusi dengan baik yaitu fitur informational, informational_duration, pave_values, special_days, dan browser.
+<p align="center">
+  <kbd><img src="pictures/distribution.png" width=650px> </kbd> <br>
+  Gambar 2 – Distribusi Dataset
+</p>
+<br>
+<p align="center">
+  <kbd><img src="pictures/outlier.png" width=650px> </kbd> <br>
+  Gambar 3 – Distribusi Dataset dengan Boxplot
+</p> 
+<br>
 
-### Multivariate Analysis
-**Hubungan Antar Kolom Numerikal :**
-- Beberapa feature yang kemungkinan redundan karena memiliki korelasi yang cukup tinggi (>0.7) diantaranya ProductRelated dengan ProductRelated_Duration, Adminisitrative dengan Adminisitrative_Duration, Informational dengan Informational_Duration, dan begitu pula BounceRates dengan ExitRates. Dalam tahap data prepocessing feature-feature tersebut dapat di drop ataupun dipilih salah satu.
-- Kolom PageValues ternyata memiliki korelasi yang cukup dengan Revenue_numbers (0.49) sehingga perlu dipertahankan.
-- Kolom BounceRates dengan beberapa kolom lain, exitrates dengan beberapa kolom lain, dan page values dengan beberapa kolom lain berkumpul di bawah dan samping kiri cenderung membentuk pola logaritmik. Itu artinya, Apabila kolom BounceRates dan kolom Informational_Duration berhubungan secara logaritmik, semakin besar nilai BounceRates, nilai Informational_Duration semakin kecil secara logaritmik. 
-- Terdapat beberapa kolom yang bentuknya linier, seperti kolom BounceRates dan kolom ExitRates juga kolom ProductRelated dan ProductRelated_Duration.
+Hasil analisi statistik deskriptif untuk **fitur-fitur numerikal** adalah sebagai berikut :
+1. Distribusi data secara keseluruhan cenderung **positively-skewed** (**Mean > Median**).
+2. Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRate, PageValues memiliki ekor distribusi yang pang panjang dengan nilai yang **menumpuk disekitar angka 0**.
+3. Dari kedua kondisi diatas dan dari analisa menggunakan boxplot mayoritas fitur memiliki outlier. <br>
+<br>
 
-**Hubungan Antar Kolom Kategorikal :**
-- Korelasi VisitorType dengan Browser dan OperatingSystem angkanya terlalu dekat (0.47 dan 0.51), sehingga antara Browser dan OperatingSystem ada kemungkinan akan di drop namun perlu dipertimbangkan kembali berhubung nilai korelasi Browser dan OperatingSystem yang tidak terlalu tinggi (0.6).
-- Ada korelasi yang rendah antara kolom TrafficType dan VisitorType (0.39).
-- Nilai korelasi antar kolom dengan kolom Revenue cenderung rendah.
+Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur **kategorikal** adalah sebagai berikut.
+1. Beberapa fitur memiliki nilai yang **telah di encoding** seperti OperatingSystems, Browser, Region, dan TrafficType, sehingga apabila diperlukan interpretasi nilai maka diperlukan data tambahan.
+2. Mayoritas pengunjung  berasal dari **region wilayah 2** dan ketika berselancar di website menggunakan **OperatingSystem jenis 2** dengan **Browser jenis 1**.
+3. **Returning Visitor** merupakan pengunjung yang paling dominan. Pada fitur VisitorType ini perlu dilakukan penanganan terhadap nilai Other.
+4. Terdapat dua bulan yang hilang pada fitur Month yaitu January dan April. Bulan **Mei** memiliki jumlah pengunjung terbanyak, lalu diikuti dengan bulan November.
+<br>
 
-**Hubungan Antar Kolom Kategorikal dan Numerikal:**
-- Tidak banyak insight yang bisa didapatkan. Contohnya pada kolom revenue terhadap kolom numerikal lain (di samping). Persebaran kolom merata baik customer yang memberikan revenue dan yang tidak. Begitu pula dengan grafik kolom Month dengan kolom numerikal lain (bawah).
+### Analysis
+<p align="center">
+  <kbd><img src="pictures/corre.png" width=650px> </kbd> <br>
+  Gambar 4 – Heatmap Analisis Multivariat
+</p>
+<br>
 
-## 📂 Stage 2 : Data Preprocessing
-### Data Cleansing
-#### 1. Handle Missing Value
-Tidak ada nilai yang kosong pada kolom, sehingga tidak dilakukan handling missing value.
+Hasil analisis korelasi antar fitur adalah sebagai berikut:
+1. **PageValues** memiliki **korelasi yang tinggi** terhadap fitur **target** yaitu Revenue. Semakin tinggi nilai PageValue, maka semakin tinggi juga kemungkinan pelanggan untuk membeli.
+2. Sedangkan **BounceRates** dan **ExitRates memiliki** nilai **korelasi negatif** terhadap **Revenue**, artinya semakin kecil nilai kedua fitur tersebut maka revenue akan semakin tinggi.
+3. Beberapa fitur yang memiliki **multikorenialitas** diantaranya adalah :
+    - ProductRelated dengan ProductRelated_Duration
+    - Adminisitrative dengan Adminisitrative_Duration
+    - Informational dengan Informational_Duration
+    - BounceRates dengan ExitRates
+<br>
 
-#### 2. Handle Duplicated Value
-Terdapat 125 data yang duplikat. Hanya diambil satu data untuk masing-masing duplikat.
+### Insight
+#### Revenue Conversion Rate Berdasarkan Visitor Type
+<br>
+<p align="center">
+  <kbd><img src="pictures/vistor x revenue.png"> </kbd> <br>
+  Gambar 5 – Revenue Conversion Rate Berdasarkan Visitor Type
+</p>
+<br>
 
-#### 3. Handle Outlier
-Presentase outlier menggunakan analisis Z-Score dalam data adalah 17.90%, nilai tersebut cukup besar, maka outlier tidak dihilangkan. Tidak dilakukan handle outlier ini juga kerana diasumsikan bukan dari kesalahan dalam pengambilan data.
+- Hampir sebanyak **80%** pengunggung website didominasi oleh **Returning Visitor**. Hal ini dapat menunjukkan bahwa perusahaan E-commerce telah berhasil untuk mempertahankan pelanggan untuk selalu mengunjugi website. Namun **Revenue Conversion Rate lebih besar** terjadi pada **New Visitor**, yaitu **25% New Visitor melakukan pembelian**. Berbeda dengan Returning Visitor.
+- Dibutuhkan data tambahan berupa angka revenue atau profit apabila ingin dilakukan analisa lebih jauh untuk mengetahui pelanggan tipe pengunjung mana yang menghasilkan keuntungan lebih besar bagi perusahaan.
+- Dari insight yang ditemukan dibutuhkan rekomendasi bisnis yang tepat untuk **meningkatkan Revenue Conversion Rate bagi Returning Visitor** dan juga untuk **meningkatkan jumlah New Visitor**.
 
-#### 4. Feature Transformation
-Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. PowerTransformer Yeo-Johnson dipilih untuk membuat distribusi lebih mendekati normal (Guassian) dan mendukung value data memiliki nilai positif atau negatif.
+#### Total Pengunjung per Bulan berdasarkan Revenue
+<br>
+<p align="center">
+  <kbd><img src="pictures/monthly visitor x revenue.png"> </kbd> <br>
+  Gambar 6 – Total Pengunjung per Bulan berdasarkan Revenue
+</p>
+<br>
+
+- Berdasarkan grafik analisis diatas dapat dilihat bahwa trafik kunjungan pelanggan, memiliki jumlah **pengunjung yang paling tinggi** pada bulan **Mei** dan selanjutnya disusul dengan bulan **November**. 
+- Namun pada bulan Mei tingginya trafik **tidak diikuti dengan tingginya angka Revenue Conversion Rate** yang hanya menghasilkan **11%**, angka ini masih cukup rendah dibandingkan dengan bulan-bulan lainnya. Sedangkan **November** merupakan bulan yang memiliki cukup **banyak pengunjung** dengan nilai **Revenue Conversion Rate** bulanan yang **paling tinggi**, yaitu mencapai **25%**.
+<br>
+
+---
+
+## 📂 **Stage 3 : Data Pre-processing**
+### Workflow Data Pre-processing
+<br>
+<p align="center">
+  <kbd><img src="pictures/workflow preprocessing.png"> </kbd> <br>
+  Gambar 7 – Workflow Data Pre-Processing
+</p>
+<br>
+
+#### 1. Handling Nilai dan Duplikat
+- Nilai **'Other'** pada fitur **VisitorType** diubah kedalam nilai dengan frekuensi terbanyak yaitu menjadi **'Returning Visitor'**.
+- Terdapat 125 data yang duplikat. Hanya **diambil satu data** untuk masing-masing duplikat.
+
+#### 2. Handling Outlier
+Presentase outlier menggunakan analisis Z-Score dalam data adalah **17.90%**, nilai tersebut cukup besar, maka **outlier tidak dihilangkan**. Tidak dilakukan handle outlier ini juga kerana diasumsikan **bukan dari kesalahan dalam pengambilan data**.
+
+#### 3. Feature Transformation
+Transformasi feature tidak menggunakan log karena data memiliki banyak value dengan nilai 0. **PowerTransformer Yeo-Johnson** dipilih karena dapat digunakan pada data yang distribusi awalnya positively/negatively-skewed, untuk membuat distribusinya menjadi lebih mendekati normal (Guassian), dan mendukung value data memiliki nilai positif atau negatif.
+
+#### 4. Feature Encoding
+Fitur VisitorType dan Revenue dilakukan **One Hot Encoding**.
 
 #### 5. Feature Extraction
-Mengubah data kategorikal kedalam numerikal. 
-- OperatingSystems, Browser, Region, TrafficType sudah memiliki feature numerik
-- Month akan dilakukan label encoding, pada bulan dibuat label peringkat berdasarkan jumlah peringkat user dari yang terbesar.
-- VisitorType, Weekend, dan Revenue akan dilakukan One Hot Encoding
+Membuat fitur baru dari fitur yang sudah ada, diantaranya adalah:
+- Duration Page Per Administrative
+- Duration Page Per Informational
+- Duration Page Per Product Related
 
-#### 6. Handle Class Imbalance
-Handle imbalance menggunakan SMOTE dengan hasil False 10297 dan True 5148.
-
-### Feature Enginering
-#### 1. Feature Selection
-Pada tahap feature selection ini fitur yang redundant adalah :
-- Administrative - Administrative_Duration
-- Informational - Informational_Duration
-- ProductRelated - ProductRelated_Duration
-- BounceRates - ExitRates
-- Administrative - Administrative_Duration
-- Informational - Informational_Duration
-- ProductRelated - ProductRelated_Duration
-
-Ketiga terakhir akan dibuat feature extraction untuk mendapatkan durasi tiap page nya, sedangkan BounceRates - ExitRates, akan dipilih salah satu, yaitu ExitRates
-
-#### 2. Feature Extraction
-Pembuatan feature :
+#### 6. Feature Selection
+Pada tahap ini dilakukan seleksi fitur yang memiliki **korelasi terhadap revenue**, menghilangkan fitur yang redundan dan kurang relavan terhadap performa model. Fitur-fitur yang dipilih antara lain adalah :
 - Duration per Page Administrative
 - Duration per Page Informational
-- Duration per Page ProductRelated
-
-**Data yang dipilih :**
-- Duration per Page Administrative
-- Duration per Page Informational
-- Duration per Page ProductRelated
+- ProductRelated
 - ExitRates
 - PageValues
 - SpecialDay
-- Month
-- VisitorType_Returning_Visito
+- VisitorType_Returning_Visitor
 - Revenue_True
+
+#### 7. Splitting Data Train dan Test
+Splitting dataset train dan test dilakukan dengan proporsi **70 : 30**.
+
+#### 8. Handling Class Imbalance
+Dikarenakan jumlah kelas antar fitur target cukup besar maka Handling Class Imbalance dilakukan pada data train dengan menggunakan metode **SMOTE**. <br>
+<br>
+
+---
+
+## 📂 **Stage 4 : Modeling and Evaluation**
+Berdasarkan beberapa algoritma yang telah diterapkan untuk uji coba performa model, algoritma Random Forest yang telah dilakukan Hyperparameter Tuning dipilih untuk diterapkan.
+
+#### Random Forest : Modeling and Evaluation
+ROC-AUC dipilih sebagai matriks evaluasi ntuk mengetahui **sejauh mana model klasifikasi memisahkan pengunjung mana yang diprediksi membeli dan tidak**. Metrik ROU-AUC ini diplot dengan dua matriks yang dibandingkan satu sama lain yaitu **TPR** (True Positive Rate atau Recall) dan **FPR** (False Positive Rate).
+
+<p align="center">
+   Tabel 2 – Hasil Evaluasi Matriks Random Forest dengan Hyperparameter Tuning  <br>
+   <kbd><img src="pictures/matrix.png" width=500px> </kbd>
+</p>
+<br>
+
+<p align="center">
+  <kbd><img src="pictures/confussionmatrix.png" width=500px> </kbd> <br>
+  Gambar 8 – Confussion Matrix Random Forest dengan Hyperparameter Tuning
+</p>
+<br>
+
+Model yang sangat baik memiliki ROC-AUC mendekati 1 yang berarti memiliki ukuran keterpisahan yang baik. Menurut Gorunescu (2011), nilai ROC-AUC juga dapat di klasifikasikan sebagai berikut:
+
+<p align="center">
+   Tabel 2 – Hasil Evaluasi Metriks Random Forest dengan Hyperparameter Tuning  <br>
+   <kbd><img src="pictures/auc.png" width=500px> </kbd>
+</p>
+<br>
+
+Nilai ROC-AU dari Random Forest didapatkan hasil sebesar **0.90** yang berarti model memiliki performa yang **sudah baik**.
+<br>
+
+#### Random Forest : Feature Importances
+Selanjutnya, untuk mengetahui seberapa fitur-fitur berpengaruh terhadap model prediksi, dilakukan analisis menggunakan SHAP Value. Berikut ini hasil dari urutan fitur-fitur (**feature importance**) yang memiliki pengaruh paling tinggi hingga yang paling rendah pengaruhnya terhadap model prediksi.
+
+<p align="center">
+  <kbd><img src="pictures/barshap.png" width=800px> </kbd> <br>
+  Gambar 9 – Grafik Feature Importance Menggunakan Barplot SHAP Value
+</p>
+<br>
+
+- Grafik ini memperhitungkan **nilai SHAP absolut, jadi tidak masalah jika fitur mempengaruhi prediksi secara positif atau negatif**. 
+- Tiga fitur yang paling mempengaruhi adalah **PageValues, ExitRates, dan ProductRelated**.
+<br>
+
+Pada grafik **beeswram** dapat diketahui bagaimana nilai yang lebih tinggi atau lebih rendah dari fitur tersebut akan mempengaruhi hasil prediksi.
+
+<p align="center">
+  <kbd><img src="pictures/beeswarm.png" width=800px> </kbd> <br>
+  Gambar 10 – Grafik Summaryplot Beeswarm SHAP Value
+</p>
+<br>
+
+- **PageValues** dan **ProductRelated** yang memiliki nilai lebih tinggi akan memiliki dampak positif terhadap prediksi (**berkorelasi positif terhadap target**). Dapat diinterpretasikan bahwa, **semakin besar** nilai pada **PageValues** dan **ProductRelated** maka kecenderungan model untuk memprediksi **target positif** (pengunjung yang membeli) akan **semakin besar**. 
+- Sedangkan untuk **ExitRate**, apabila memiliki nilai yang lebih tinggi maka akan berdampak negatif pada prediksi (**berkorelasi negatif terhadap target**). Jadi **semakin kecil nilai ExitRate**-nya, maka model **memprediksi pengunjung yang membeli akan semakin besar**.
+<br>
+
+---
+## 📂 **Stage 5 : Business Insight and Recomendation**
