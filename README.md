@@ -155,7 +155,7 @@ Dikarenakan jumlah kelas antar fitur target cukup besar maka Handling Class Imba
 ## 📂 **Stage 4 : Modeling and Evaluation**
 Berdasarkan beberapa algoritma yang telah diterapkan untuk uji coba performa model, algoritma Random Forest yang telah dilakukan Hyperparameter Tuning dipilih untuk diterapkan.
 
-#### Random Forest : Modeling and Evaluation
+### Random Forest : Modeling and Evaluation
 ROC-AUC dipilih sebagai matriks evaluasi ntuk mengetahui **sejauh mana model klasifikasi memisahkan pengunjung mana yang diprediksi membeli dan tidak**. Metrik ROU-AUC ini diplot dengan dua matriks yang dibandingkan satu sama lain yaitu **TPR** (True Positive Rate atau Recall) dan **FPR** (False Positive Rate).
 
 <p align="center">
@@ -181,7 +181,7 @@ Model yang sangat baik memiliki ROC-AUC mendekati 1 yang berarti memiliki ukuran
 Nilai ROC-AU dari Random Forest didapatkan hasil sebesar **0.90** yang berarti model memiliki performa yang **sudah baik**.
 <br>
 
-#### Random Forest : Feature Importances
+### Random Forest : Feature Importances
 Selanjutnya, untuk mengetahui seberapa fitur-fitur berpengaruh terhadap model prediksi, dilakukan analisis menggunakan SHAP Value. Berikut ini hasil dari urutan fitur-fitur (**feature importance**) yang memiliki pengaruh paling tinggi hingga yang paling rendah pengaruhnya terhadap model prediksi.
 
 <p align="center">
@@ -203,8 +203,76 @@ Pada grafik **beeswram** dapat diketahui bagaimana nilai yang lebih tinggi atau 
 <br>
 
 - **PageValues** dan **ProductRelated** yang memiliki nilai lebih tinggi akan memiliki dampak positif terhadap prediksi (**berkorelasi positif terhadap target**). Dapat diinterpretasikan bahwa, **semakin besar** nilai pada **PageValues** dan **ProductRelated** maka kecenderungan model untuk memprediksi **target positif** (pengunjung yang membeli) akan **semakin besar**. 
-- Sedangkan untuk **ExitRate**, apabila memiliki nilai yang lebih tinggi maka akan berdampak negatif pada prediksi (**berkorelasi negatif terhadap target**). Jadi **semakin kecil nilai ExitRate**-nya, maka model **memprediksi pengunjung yang membeli akan semakin besar**.
+- Sedangkan untuk **ExitRates**, apabila memiliki nilai yang lebih tinggi maka akan berdampak negatif pada prediksi (**berkorelasi negatif terhadap target**). Jadi **semakin kecil nilai ExitRates**-nya, maka model **memprediksi pengunjung yang membeli akan semakin besar**.
 <br>
 
 ---
 ## 📂 **Stage 5 : Business Insight and Recomendation**
+
+### Business Insight - PageValues
+
+<p align="center">
+  <kbd><img src="pictures/pagevaluedistribution.png" width=650px> </kbd> <br>
+  Gambar 11 – Distribusi PageValues
+</p>
+
+<p align="center">
+   Tabel 3 – Persentase PageValues berdasarkan Revenue Conversion Rate  <br>
+   <kbd><img src="pictures/pagevalues.png" width=450px> </kbd>
+</p>
+<br>
+
+- Pengunjung yang melakukan **pembelian** cenderung mengunjungi halaman website dengan nilai **PageValues** yang **lebih besar** dibandingkan dengan pengunjung yang tidak melakukan pembelian.
+- Nilai **Revenue Conversion Rate** pada PageValues yang memiliki nilai **lebih dari 0** dapat mencapai **56%**. Dari hal tersebut PageValues ini memilki korelasi yang kuat terhadap target. <br>
+<br>
+
+### Business Insight - ExitRates
+
+<p align="center">
+  <kbd><img src="pictures/exitrate.png" width=650px> </kbd> <br>
+  Gambar 12 – Distribusi ExitRates
+</p>
+<br>
+
+- Pengunjung yang melakukan **pembelian** cenderung memiliki nilai **ExitRates** yang **lebih rendah** dibandingkan dengan pengunjung yang tidak melakukan pembelian.
+- Dari analisis dapat dilihat bahwa nilai **maksimal ExitRates adalah 20%**. Menurut [sumber](https://upqode.com/bounce-rate-vs-exit-rate/) rata-rata Exit Rates untuk sebuah website e-commerce berada **dibawah 25%**. Jadi, nilai Exit Rates tersebut masih dapat diterima.<br>
+<br>
+
+### Business Insight - Product Related
+<p align="center">
+  <kbd><img src="pictures/productrelated.png" width=500px> </kbd> <br>
+  Gambar 13 – Distribusi ExitRates
+</p>
+<br>
+
+- Menurut [sumber](https://www.klipfolio.com/metrics/marketing/page-views-per-session/), **rata-rata page views** untuk website seluruh industri adalah **5**. Berdasarkan hal tersebut, nilai page views **ProductRelated** sebagian besar **sudah melebihi dari rata-rata**. 
+- Probabilitas pengunjung untuk melakukan pembelian dapat menjadi tinggi apabila pengunjung tersebut menghabiskan waktu paling tidak [**50 detik**](https://medium.com/cappasity-blog/average-time-on-page-its-impact-on-purchase-probability-for-e-commerce-edcfab5b02ad) pada sebuah halaman produk.<br>
+<br>
+
+### Mechine Learning Prediction Workflow
+
+Beikut ini adalah Workflow dari **Early Purchase Prediction** yaitu machine learning untuk memprediksi pengunjung untuk membeli atau tidak sebelum pengunjung melakukan pembelian.
+
+<p align="center">
+  <kbd><img src="pictures/workflow.png"> </kbd> <br>
+  Gambar 14 – Mechine Learning Prediction Workflow
+</p>
+<br>
+
+### Business Recomendation
+#### Rekomendasi Bisnis Berdasarkan Mechine Learning
+- Pemberian notifikasi rekomendasi laman produk untuk jenis yang sama dengan PageValues yang lebih tinggi. PageValues yang tinggi ini dapat dimaksimalkan dengan konten dan kegunaan pada halaman-halaman serta peringkat yang baik untuk produk. Dari hal tersebut diharapkan dapat meningkatkan nilai Revenue Conversion Rate.
+
+#### Rekomendasi Bisnis Berdasarkan Insight
+- Pemberian promosi dan pengadaan event pada bulan-bulan tertentu yang memiliki trafik tinggi atau Revenue Corversion Rate yang tinggi (Mei, Maret, November, dan Desember).
+- Dikarenakan persentase revenue New Visitor lebih besar (25%) dibandingkan Returning Visitor (14%), maka direkomendasikan untuk meningkatkan trafik untuk New Visitor, dengan cara:
+    - Pemberian diskon khusus pengguna baru
+    - Melakukan iklan di beberapa media untuk meningkatkan awareness masyarakat terhadap E-Commerce ini.<br>
+<br>
+
+---
+
+#### Sumber
+- *Gorunescu, F. (2011). Data Mining Concepts, Models and Techniques. Berlin:
+Springer.*
+- *Ku, YC and Tai, YM, "What Happens When Recommendation System Meets Reputation System? The Impact of Recommendation Information on Purchase Intention," 2013 46th Hawaii International Conference on System Sciences, 2013, pp. 1376-1383, doi: 10.1109/HICSS.2013.605.*
