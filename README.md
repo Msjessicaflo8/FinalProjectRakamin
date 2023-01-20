@@ -23,6 +23,8 @@
 
 ### Business Matrics
 -  Revenue Conversion Rate
+<br>
+
 ---
 
 ## 📂 **Stage 1 : Exploratory Data Analysis**
@@ -56,6 +58,7 @@ Sedangkan hasil analisis statistik deskriptif untuk fitur-fitur **kategorikal** 
 2. Mayoritas pengunjung  berasal dari **region wilayah 2** dan ketika berselancar di website menggunakan **OperatingSystem jenis 2** dengan **Browser jenis 1**.
 3. **Returning Visitor** merupakan pengunjung yang paling dominan. Pada fitur VisitorType ini perlu dilakukan penanganan terhadap nilai Other.
 4. Terdapat dua bulan yang hilang pada fitur Month yaitu January dan April. Bulan **Mei** memiliki jumlah pengunjung terbanyak, lalu diikuti dengan bulan November.
+<br>
 
 ### Analysis
 <p align="center">
@@ -72,6 +75,7 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
     - Adminisitrative dengan Adminisitrative_Duration
     - Informational dengan Informational_Duration
     - BounceRates dengan ExitRates
+<br>
 
 ### Insight
 #### Revenue Conversion Rate Berdasarkan Visitor Type
@@ -96,6 +100,7 @@ Hasil analisis korelasi antar fitur adalah sebagai berikut:
 
 - Berdasarkan grafik analisis diatas dapat dilihat bahwa trafik kunjungan pelanggan, memiliki jumlah **pengunjung yang paling tinggi** pada bulan **Mei** dan selanjutnya disusul dengan bulan **November**. 
 - Namun pada bulan Mei tingginya trafik **tidak diikuti dengan tingginya angka Revenue Conversion Rate** yang hanya menghasilkan **11%**, angka ini masih cukup rendah dibandingkan dengan bulan-bulan lainnya. Sedangkan **November** merupakan bulan yang memiliki cukup **banyak pengunjung** dengan nilai **Revenue Conversion Rate** bulanan yang **paling tinggi**, yaitu mencapai **25%**.
+<br>
 
 ---
 
@@ -135,16 +140,71 @@ Pada tahap ini dilakukan seleksi fitur yang memiliki **korelasi terhadap revenue
 - ExitRates
 - PageValues
 - SpecialDay
-- VisitorType_Returning_Visito
+- VisitorType_Returning_Visitor
 - Revenue_True
 
 #### 7. Splitting Data Train dan Test
 Splitting dataset train dan test dilakukan dengan proporsi **70 : 30**.
 
 #### 8. Handling Class Imbalance
-Dikarenakan jumlah kelas antar fitur target cukup besar maka Handling Class Imbalance dilakukan pada data train dengan menggunakan metode **SMOTE**.
+Dikarenakan jumlah kelas antar fitur target cukup besar maka Handling Class Imbalance dilakukan pada data train dengan menggunakan metode **SMOTE**. <br>
+<br>
 
 ---
+
 ## 📂 **Stage 4 : Modeling and Evaluation**
+Berdasarkan beberapa algoritma yang telah diterapkan untuk uji coba performa model, algoritma Random Forest yang telah dilakukan Hyperparameter Tuning dipilih untuk diterapkan.
+
+#### Random Forest : Modeling and Evaluation
+ROC-AUC dipilih sebagai matriks evaluasi ntuk mengetahui **sejauh mana model klasifikasi memisahkan pengunjung mana yang diprediksi membeli dan tidak**. Metrik ROU-AUC ini diplot dengan dua matriks yang dibandingkan satu sama lain yaitu **TPR** (True Positive Rate atau Recall) dan **FPR** (False Positive Rate).
+
+<p align="center">
+   Tabel 2 – Hasil Evaluasi Matriks Random Forest dengan Hyperparameter Tuning  <br>
+   <kbd><img src="pictures/matrix.png" width=500px> </kbd>
+</p>
+<br>
+
+<p align="center">
+  <kbd><img src="pictures/confussionmatrix.png" width=500px> </kbd> <br>
+  Gambar 8 – Confussion Matrix Random Forest dengan Hyperparameter Tuning
+</p>
+<br>
+
+Model yang sangat baik memiliki ROC-AUC mendekati 1 yang berarti memiliki ukuran keterpisahan yang baik. Menurut Gorunescu (2011), nilai ROC-AUC juga dapat di klasifikasikan sebagai berikut:
+
+<p align="center">
+   Tabel 2 – Hasil Evaluasi Metriks Random Forest dengan Hyperparameter Tuning  <br>
+   <kbd><img src="pictures/auc.png" width=500px> </kbd>
+</p>
+<br>
+
+Nilai ROC-AU dari Random Forest didapatkan hasil sebesar **0.90** yang berarti model memiliki performa yang **sudah baik**.
+<br>
+
+#### Random Forest : Feature Importances
+Selanjutnya, untuk mengetahui seberapa fitur-fitur berpengaruh terhadap model prediksi, dilakukan analisis menggunakan SHAP Value. Berikut ini hasil dari urutan fitur-fitur (**feature importance**) yang memiliki pengaruh paling tinggi hingga yang paling rendah pengaruhnya terhadap model prediksi.
+
+<p align="center">
+  <kbd><img src="pictures/barshap.png" width=800px> </kbd> <br>
+  Gambar 9 – Grafik Feature Importance Menggunakan Barplot SHAP Value
+</p>
+<br>
+
+- Grafik ini memperhitungkan **nilai SHAP absolut, jadi tidak masalah jika fitur mempengaruhi prediksi secara positif atau negatif**. 
+- Tiga fitur yang paling mempengaruhi adalah **PageValues, ExitRates, dan ProductRelated**.
+<br>
+
+Pada grafik **beeswram** dapat diketahui bagaimana nilai yang lebih tinggi atau lebih rendah dari fitur tersebut akan mempengaruhi hasil prediksi.
+
+<p align="center">
+  <kbd><img src="pictures/beeswarm.png" width=800px> </kbd> <br>
+  Gambar 10 – Grafik Summaryplot Beeswarm SHAP Value
+</p>
+<br>
+
+- **PageValues** dan **ProductRelated** yang memiliki nilai lebih tinggi akan memiliki dampak positif terhadap prediksi (**berkorelasi positif terhadap target**). Dapat diinterpretasikan bahwa, **semakin besar** nilai pada **PageValues** dan **ProductRelated** maka kecenderungan model untuk memprediksi **target positif** (pengunjung yang membeli) akan **semakin besar**. 
+- Sedangkan untuk **ExitRate**, apabila memiliki nilai yang lebih tinggi maka akan berdampak negatif pada prediksi (**berkorelasi negatif terhadap target**). Jadi **semakin kecil nilai ExitRate**-nya, maka model **memprediksi pengunjung yang membeli akan semakin besar**.
+<br>
+
 ---
 ## 📂 **Stage 5 : Business Insight and Recomendation**
